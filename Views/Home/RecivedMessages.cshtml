@@ -1,0 +1,36 @@
+﻿@model List<Community.ViewModels.HomeRecivedMessagesViewModel>
+@{
+    ViewData["Title"] = "Inbox";
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+}
+<h1>Inbox</h1>
+<div class="w3-container">
+    <h2>Messages from @Model.First().Sender</h2>
+    <ul class="w3-ul w3-card-4">
+        @foreach (Community.ViewModels.HomeRecivedMessagesViewModel Message in Model)
+        {
+            if (Message.Deleted == false)
+            {
+                <li class="w3-bar">
+                    <img src="~/css/img_mail.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                    <div class="w3-bar-item">
+                        @{ Dictionary<string, string> Parameters = new Dictionary<string, string>();
+                            Parameters.Add("MessageId", Message.Id);
+                        }
+                        <a class="w3-white w3-large" asp-area="" asp-controller="Home" asp-action="ViewMessage" asp-all-route-data=Parameters>@Message.Subject</a><br>
+                        <span>@Message.SendingDate</span>
+                        @if (Message.Seen == true)
+                        {
+                            <span>Seen</span>
+                        }
+                        else
+                        {
+                            <span>Unseen</span>
+                        }
+                    </div>
+                </li>
+            }
+        }
+
+    </ul>
+</div>

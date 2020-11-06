@@ -1,0 +1,13 @@
+﻿@model DateTime
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>
+        The last login: @ViewBag.LastLogin <br>
+        Logged in @ViewBag.NumOfLoginsLastMonth time(s) in the last 30 days <br>
+    </p>
+
+</div>
