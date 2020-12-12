@@ -1,6 +1,5 @@
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\Community.exe
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Community.AssemblyInfoInputs.cache
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Community.AssemblyInfo.cs
@@ -154,8 +153,6 @@ C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\run
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\Community.StaticWebAssets.xml
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
-C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
-C:\Users\yasse\Desktop\Projekt\VS projects\Community\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.local.json
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml.g.cs
@@ -225,3 +222,4 @@ C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Com
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Razor\Views\Home\Inbox.cshtml.g.cs
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Razor\Views\Home\RecivedMessages.cshtml.g.cs
 C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\Razor\Views\Home\ViewMessage.cshtml.g.cs
+C:\Users\yasse\Desktop\Projekt\VS projects\Community\obj\Debug\netcoreapp3.1\scopedcss\bundle\Community.styles.css

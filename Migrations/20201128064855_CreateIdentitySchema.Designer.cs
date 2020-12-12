@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Community.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20201025034857_SubjectMesseageTable")]
-    partial class SubjectMesseageTable
+    [Migration("20201128064855_CreateIdentitySchema")]
+    partial class CreateIdentitySchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

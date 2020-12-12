@@ -20,7 +20,11 @@ namespace Community.ViewModels
 
         public HomeComposeViewModel()
         {
+            Id = null;
+            Recipient = null;
         }
+
+
 
         public override string ToString()
         {

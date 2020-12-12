@@ -8,9 +8,10 @@ namespace Community.ViewModels
 {
     public class HomeSendMessageViewModel
     {
-        [StringLength(128, MinimumLength = 4, ErrorMessage = "Allowed length 1-128"),
+        [StringLength(128, MinimumLength = 4, ErrorMessage = "Allowed length 4-128"),
             Required(ErrorMessage = "Subject is required.")]
         public string Subject { get; set; }
+
         [StringLength(3000, MinimumLength = 1, ErrorMessage = "Allowed length 1-3000"),
             Required(ErrorMessage = "Content is required.")]
         public string Content { get; set; }

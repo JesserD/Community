@@ -34,51 +34,56 @@ namespace Community.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.LastLogin = _communityLogic.GetLastLogin(_userManager.GetUserId(User));
-            ViewBag.NumOfLoginsLastMonth = _communityLogic.GetNumOfLoginsLastMonth(_userManager.GetUserId(User));
-            return View();
+            DateTime lastLogin = _communityLogic.GetLastLogin(_userManager.GetUserId(User));
+            int NumOfLoginsLastMonth = _communityLogic.GetNumOfLoginsLastMonth(_userManager.GetUserId(User));
+            int NumOfUnseenMessages = _communityLogic.GetNumOfUnseenMessages(User.Identity.Name);
+            HomeIndexViewModel vm = new HomeIndexViewModel(lastLogin, NumOfLoginsLastMonth, NumOfUnseenMessages);
+            return View(vm);
         }
 
         public IActionResult Compose(HomeComposeViewModel Model)
         {
             ViewBag.AllEmailsOfUsers = _communityLogic.GetAllEmailsOfUsers();
-            if (Model.ToString().Equals("Id "))
+            if (Model.Id == null)
                 ViewBag.HomeComposeViewModel = null;
             else
                 ViewBag.HomeComposeViewModel = Model;
-            //Console.WriteLine("HomeComposeViewModel test " + Model.ToString());
             return View();
         }
         [HttpPost]
-        public IActionResult SendMessage(HomeSendMessageViewModel NewMessage)
+        public async Task<IActionResult> SendMessage(HomeSendMessageViewModel NewMessage)
         {
-            NewMessage.Sender = User.Identity.Name;
-            //Console.WriteLine("ModelState.IsValid: " + ModelState.IsValid);
+            NewMessage.Sender = _userManager.GetUserId(User);
+            IdentityUser RecipientUser = await _userManager.FindByNameAsync(NewMessage.Recipient);
+            string Recipient = NewMessage.Recipient;
+            NewMessage.Recipient = RecipientUser.Id;
             Message InsertedMessage = _communityLogic.InsertNewMessage(NewMessage);
-            HomeComposeViewModel _homeComposeViewModel = new HomeComposeViewModel(
-                InsertedMessage.Id, InsertedMessage.Recipient, InsertedMessage.SendingDate);
-            return RedirectToAction("Compose", "Home", _homeComposeViewModel);
+            HomeComposeViewModel vm = new HomeComposeViewModel(
+                InsertedMessage.Id, Recipient, InsertedMessage.SendingDate);
+            return RedirectToAction("Compose", "Home", vm);
         }
 
         public IActionResult Inbox()
         {
-            ViewBag.Senders = _communityLogic.GetAllEmailsOfsenders(User.Identity.Name);
-            ViewBag.NumOfMessages = _communityLogic.GetNumOfMessages(User.Identity.Name);
-            ViewBag.NumOfUnseenMessages = _communityLogic.GetNumOfUnseenMessages(User.Identity.Name);
-            ViewBag.NumOfDeletedMessages = _communityLogic.GetNumOfDeletedMessages(User.Identity.Name);
-            return View();
+            List<string> Senders = (List<string>)_communityLogic.GetAllEmailsOfsenders(User.Identity.Name);
+            int NumOfMessages = _communityLogic.GetNumOfMessages(User.Identity.Name);
+            int NumOfUnseenMessages = _communityLogic.GetNumOfUnseenMessages(User.Identity.Name);
+            int NumOfDeletedMessages = _communityLogic.GetNumOfDeletedMessages(User.Identity.Name);
+            HomeInboxViweModel vm = new HomeInboxViweModel(Senders, NumOfMessages, NumOfUnseenMessages, NumOfDeletedMessages);
+
+            return View(vm);
         }
         public IActionResult RecivedMessages(Dictionary<string, string> Parameters)
         {
             if (Parameters.ContainsKey("Deleted"))
                 _communityLogic.HasBeenDeleted(Parameters["MessageId"]);
-            var Model = new List<HomeRecivedMessagesViewModel>();
+            var vm = new List<HomeRecivedMessagesViewModel>();
             IEnumerable<Message> Messages = _communityLogic.GetAllMessagesOfSender(User.Identity.Name, Parameters["Sender"]);
             if (Messages.Count() == 0)
                 return RedirectToAction("Index", "Home");
             foreach (Message m in Messages)
-                Model.Add(new HomeRecivedMessagesViewModel(m.Id, m.Sender, m.Subject, m.SendingDate.ToString(), m.Seen, m.Deleted));
-            return View(Model);
+                vm.Add(new HomeRecivedMessagesViewModel(m.Id, m.Sender, m.Subject, m.SendingDate.ToString(), m.Seen, m.Deleted));
+            return View(vm);
         }
         public IActionResult ViewMessage(string MessageId)
         {

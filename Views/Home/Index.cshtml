@@ -1,4 +1,4 @@
-﻿@model DateTime
+﻿@model Community.ViewModels.HomeIndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -6,8 +6,12 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>
-        The last login: @ViewBag.LastLogin <br>
-        Logged in @ViewBag.NumOfLoginsLastMonth time(s) in the last 30 days <br>
+        @Html.DisplayNameFor(model => model.LastLogin)
+        @Html.DisplayFor(model => model.LastLogin)<br>
+        @Html.DisplayNameFor(model => model.NumOfLoginsLastMonth)
+        @Html.DisplayFor(model => model.NumOfLoginsLastMonth)<br>
+        @Html.DisplayNameFor(model => model.NumOfUnseenMessages)
+        @Html.DisplayFor(model => model.NumOfUnseenMessages)<br>
     </p>
 
 </div>

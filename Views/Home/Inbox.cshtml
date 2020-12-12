@@ -1,4 +1,4 @@
-﻿
+﻿@model Community.ViewModels.HomeInboxViweModel
 @{
     ViewData["Title"] = "Inbox";
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -8,7 +8,7 @@
 <div class="w3-container">
     <h2>Sender List</h2>
     <ul class="w3-ul w3-card-4">
-        @foreach (string Sender in ViewBag.Senders)
+        @foreach (string Sender in Model.Senders)
         {
             <li class="w3-bar">
                 <img src="~/css/img_avatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
@@ -25,9 +25,12 @@
 </div>
 <footer class="border-top footer text-muted">
     <div class="container">
-        Received messages: @ViewBag.NumOfMessages
-        Unseen messages: @ViewBag.NumOfUnseenMessages
-        Deleted messages: @ViewBag.NumOfDeletedMessages
+        @Html.DisplayNameFor(model => Model.NumOfMessages)
+        @Html.DisplayFor(model => Model.NumOfMessages)
+        @Html.DisplayNameFor(model => Model.NumOfUnseenMessages)
+        @Html.DisplayFor(model => Model.NumOfUnseenMessages)
+        @Html.DisplayNameFor(model => Model.NumOfDeletedMessages)
+        @Html.DisplayFor(model => Model.NumOfDeletedMessages)
     </div>
 </footer>
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Community.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class CreateIdentitySchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,6 +51,7 @@ namespace Community.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    Subject = table.Column<string>(nullable: false),
                     Content = table.Column<string>(nullable: false),
                     SendingDate = table.Column<DateTime>(nullable: false),
                     Sender = table.Column<string>(nullable: false),
