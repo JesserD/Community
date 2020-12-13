@@ -8,15 +8,17 @@
 <div class="w3-container">
     <h2>Sender List</h2>
     <ul class="w3-ul w3-card-4">
-        @foreach (string Sender in Model.Senders)
+        @for (int i = 0; i < Model.SendersIds.Count; i++)
         {
             <li class="w3-bar">
                 <img src="~/css/img_avatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
                 <div class="w3-bar-item">
                     @{ Dictionary<string, string> Parameters = new Dictionary<string, string>();
-                        Parameters.Add("Sender", Sender);
+                        Parameters.Add("SenderId", Model.SendersIds.ElementAt(i));
+                        Parameters.Add("SenderEmail", Model.SendersEmails.ElementAt(i));
                     }
-                    <a class="w3-white w3-large" asp-area="" asp-controller="Home" asp-action="RecivedMessages" asp-all-route-data=Parameters>@Sender</a><br>
+                    <a class="w3-white w3-large" asp-area="" asp-controller="Home" asp-action="RecivedMessages" asp-all-route-data=Parameters>
+                    @Model.SendersEmails.ElementAt(i)</a><br>
                     <span>Community member</span>
                 </div>
             </li>

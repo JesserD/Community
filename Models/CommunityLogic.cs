@@ -86,10 +86,12 @@ namespace Community.Models
             return this.Context.Messages.
                 Where(m => m.Recipient == Recipient && m.Sender == Sender && m.Deleted == false).ToList();
         }
-        public IEnumerable<String> GetAllEmailsOfsenders(string RecipientEmail)
+        public IEnumerable<String> GetAllIdsOfsenders(string RecipientId)
         {
-            return this.Context.Messages.Where(m => m.Recipient == RecipientEmail && m.Deleted == false).
+             var SendersIds = this.Context.Messages.Where(m => m.Recipient == RecipientId && m.Deleted == false).
                 Select(m => m.Sender).Distinct().ToList();
+
+            return SendersIds;
         }
         public Message GetMessage(string Id)
         {

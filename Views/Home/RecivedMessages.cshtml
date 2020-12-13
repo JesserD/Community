@@ -5,7 +5,7 @@
 }
 <h1>Inbox</h1>
 <div class="w3-container">
-    <h2>Messages from @Model.First().Sender</h2>
+    <h2>Messages from @Model.First().SenderEmail</h2>
     <ul class="w3-ul w3-card-4">
         @foreach (Community.ViewModels.HomeRecivedMessagesViewModel Message in Model)
         {

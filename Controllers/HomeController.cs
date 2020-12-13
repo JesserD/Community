@@ -36,7 +36,7 @@ namespace Community.Controllers
         {
             DateTime lastLogin = _communityLogic.GetLastLogin(_userManager.GetUserId(User));
             int NumOfLoginsLastMonth = _communityLogic.GetNumOfLoginsLastMonth(_userManager.GetUserId(User));
-            int NumOfUnseenMessages = _communityLogic.GetNumOfUnseenMessages(User.Identity.Name);
+            int NumOfUnseenMessages = _communityLogic.GetNumOfUnseenMessages(_userManager.GetUserId(User));
             HomeIndexViewModel vm = new HomeIndexViewModel(lastLogin, NumOfLoginsLastMonth, NumOfUnseenMessages);
             return View(vm);
         }
@@ -63,34 +63,47 @@ namespace Community.Controllers
             return RedirectToAction("Compose", "Home", vm);
         }
 
-        public IActionResult Inbox()
+        public async Task<IActionResult> Inbox()
         {
-            List<string> Senders = (List<string>)_communityLogic.GetAllEmailsOfsenders(User.Identity.Name);
-            int NumOfMessages = _communityLogic.GetNumOfMessages(User.Identity.Name);
-            int NumOfUnseenMessages = _communityLogic.GetNumOfUnseenMessages(User.Identity.Name);
-            int NumOfDeletedMessages = _communityLogic.GetNumOfDeletedMessages(User.Identity.Name);
-            HomeInboxViweModel vm = new HomeInboxViweModel(Senders, NumOfMessages, NumOfUnseenMessages, NumOfDeletedMessages);
+            List<string> SendersId = (List<string>)_communityLogic.GetAllIdsOfsenders(_userManager.GetUserId(User));
+            List<string> SendersEmails = new List<string>();
+            foreach (string id in SendersId)
+            {
+                IdentityUser SendertUser = await _userManager.FindByIdAsync(id);
+                SendersEmails.Add(SendertUser.Email);
+            }
+            int NumOfMessages = _communityLogic.GetNumOfMessages(_userManager.GetUserId(User));
+            int NumOfUnseenMessages = _communityLogic.GetNumOfUnseenMessages(_userManager.GetUserId(User));
+            int NumOfDeletedMessages = _communityLogic.GetNumOfDeletedMessages(_userManager.GetUserId(User));
+            HomeInboxViweModel vm = new HomeInboxViweModel(SendersEmails, SendersId, NumOfMessages, NumOfUnseenMessages, NumOfDeletedMessages);
 
             return View(vm);
         }
-        public IActionResult RecivedMessages(Dictionary<string, string> Parameters)
+        public async Task<IActionResult> RecivedMessages(Dictionary<string, string> Parameters)
         {
             if (Parameters.ContainsKey("Deleted"))
                 _communityLogic.HasBeenDeleted(Parameters["MessageId"]);
             var vm = new List<HomeRecivedMessagesViewModel>();
-            IEnumerable<Message> Messages = _communityLogic.GetAllMessagesOfSender(User.Identity.Name, Parameters["Sender"]);
+            IEnumerable<Message> Messages = _communityLogic.GetAllMessagesOfSender(_userManager.GetUserId(User), Parameters["SenderId"]);
             if (Messages.Count() == 0)
                 return RedirectToAction("Index", "Home");
             foreach (Message m in Messages)
-                vm.Add(new HomeRecivedMessagesViewModel(m.Id, m.Sender, m.Subject, m.SendingDate.ToString(), m.Seen, m.Deleted));
+            {
+                IdentityUser SendertUser = await _userManager.FindByIdAsync(m.Sender);
+                vm.Add(new HomeRecivedMessagesViewModel(m.Id, m.Sender, SendertUser.Email, m.Subject, m.SendingDate.ToString(), m.Seen, m.Deleted));
+            }
+                
             return View(vm);
         }
-        public IActionResult ViewMessage(string MessageId)
+        public async Task<IActionResult> ViewMessage(string MessageId)
         {
-            _communityLogic.HasBeenSeen(MessageId);
             Message message = _communityLogic.GetMessage(MessageId);
+            if (!message.Recipient.Equals(_userManager.GetUserId(User)))
+                return View(null);
+            _communityLogic.HasBeenSeen(MessageId);
+            IdentityUser SendertUser = await _userManager.FindByIdAsync(message.Sender);
             HomeViewMessageViewModel Model = new HomeViewMessageViewModel (
-                message.Id, message.Content, message.Subject, message.Sender, message.SendingDate);
+                message.Id, message.Content, message.Subject, message.Sender, SendertUser.Email, message.SendingDate);
             return View(Model);
         }
 

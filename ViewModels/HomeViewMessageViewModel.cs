@@ -10,15 +10,17 @@ namespace Community.ViewModels
         public string Id { get; set; }
         public string Content { get; set; }
         public string Subject { get; set; }
-        public string Sender { get; set; }
+        public string SenderId { get; set; }
+        public string SenderEmail { get; set; }
         public DateTime SendingDate { get; set; }
 
-        public HomeViewMessageViewModel(string id, string content, string subject, string sender, DateTime sendingDate)
+        public HomeViewMessageViewModel(string id, string content, string subject, string senderId, string senderEmail, DateTime sendingDate)
         {
             Id = id;
             Content = content;
             Subject = subject;
-            Sender = sender;
+            SenderId = senderId;
+            SenderEmail = senderEmail;
             SendingDate = sendingDate;
         }
         public HomeViewMessageViewModel()

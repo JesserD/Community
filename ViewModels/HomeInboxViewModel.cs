@@ -10,7 +10,8 @@ namespace Community.ViewModels
 
     {
         [Display(Name = "Sender List")]
-        public List<string> Senders { get; set; }
+        public List<string> SendersEmails { get; set; }
+        public List<string> SendersIds { get; set; }
         [Display(Name = "Received messages")]
         public int NumOfMessages { get; set; }
         [Display(Name = "Unseen messages")]
@@ -18,9 +19,10 @@ namespace Community.ViewModels
         [Display(Name = "Deleted Messages")]
         public int NumOfDeletedMessages { get; set; }
 
-        public HomeInboxViweModel(List<string> senders, int numOfMessages, int numOfUnseenMessages, int numOfDeletedMessages)
+        public HomeInboxViweModel(List<string> sendersEmails, List<string> sendersIds, int numOfMessages, int numOfUnseenMessages, int numOfDeletedMessages)
         {
-            Senders = senders;
+            SendersEmails = sendersEmails;
+            SendersIds = sendersIds;
             NumOfMessages = numOfMessages;
             NumOfUnseenMessages = numOfUnseenMessages;
             NumOfDeletedMessages = numOfDeletedMessages;

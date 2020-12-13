@@ -3,29 +3,38 @@
     ViewData["Title"] = "Inbox";
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 }
-<h1>Inbox</h1>
-<div class="w3-card-4">
 
-    <header class="w3-container w3-light-grey">
-        <h3>From @Model.Sender</h3>
-    </header>
+@if (Model != null)
+{
+    <h1>Inbox</h1>
+    <div class="w3-card-4">
 
-    <div class="w3-container">
-        <p>Subject : @Model.Subject</p>
-        <hr>
-        <img src="/css/img_avatar.png" alt="Avatar" class="w3-bar-item w3-left w3-circle w3-hide-small" style="width:85px">
-        <p>@Model.Content</p>
+        <header class="w3-container w3-light-grey">
+            <h3>From @Model.SenderEmail</h3>
+        </header>
+
+        <div class="w3-container">
+            <p>Subject : @Model.Subject</p>
+            <hr>
+            <img src="/css/img_avatar.png" alt="Avatar" class="w3-bar-item w3-left w3-circle w3-hide-small" style="width:85px">
+            <p>@Model.Content</p>
+        </div>
+        <p>Sending Date: @Model.SendingDate</p>
+
+        @{ Dictionary<string, string> Sender = new Dictionary<string, string>();
+            Sender.Add("SenderId", Model.SenderId);
+
+            Dictionary<string, string> SenderAndDeleted = new Dictionary<string, string>();
+            SenderAndDeleted.Add("SenderId", Model.SenderId);
+            SenderAndDeleted.Add("Deleted", "true");
+            SenderAndDeleted.Add("MessageId", Model.Id);
+        }
+        <a class="w3-button w3-block w3-dark-grey" asp-area="" asp-controller="Home" asp-action="RecivedMessages" asp-all-route-data=SenderAndDeleted>Delete this message</a>
+        <a class="w3-button w3-block w3-dark-grey" asp-area="" asp-controller="Home" asp-action="RecivedMessages" asp-all-route-data=Sender>Back</a>
     </div>
-    <p>Sending Date: @Model.SendingDate</p>
+}
 
-    @{ Dictionary<string, string> Sender = new Dictionary<string, string>();
-        Sender.Add("Sender", Model.Sender);
-
-        Dictionary<string, string> SenderAndDeleted = new Dictionary<string, string>();
-        SenderAndDeleted.Add("Sender", Model.Sender);
-        SenderAndDeleted.Add("Deleted", "true");
-        SenderAndDeleted.Add("MessageId", Model.Id);
-    }
-    <a class="w3-button w3-block w3-dark-grey" asp-area="" asp-controller="Home" asp-action="RecivedMessages" asp-all-route-data=SenderAndDeleted>Delete this message</a>
-    <a class="w3-button w3-block w3-dark-grey" asp-area="" asp-controller="Home" asp-action="RecivedMessages" asp-all-route-data=Sender>Back</a>
-</div>
+@if (Model == null)
+{
+    <p>Access denied</p>
+}

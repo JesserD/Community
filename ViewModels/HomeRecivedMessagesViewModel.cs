@@ -9,7 +9,8 @@ namespace Community.ViewModels
     public class HomeRecivedMessagesViewModel
     {
         public string Id { get; set; }
-        public string Sender { get; set; }
+        public string SenderId { get; set; }
+        public string SenderEmail { get; set; }
         public string Subject { get; set; }
         public string SendingDate { get; set; }
         [Required]
@@ -17,10 +18,11 @@ namespace Community.ViewModels
         [Required]
         public bool Deleted { get; set; }
 
-        public HomeRecivedMessagesViewModel(string id, string sender, string subject, string sendingDate, bool seen, bool deleted)
+        public HomeRecivedMessagesViewModel(string id, string senderId, string senderEmail, string subject, string sendingDate, bool seen, bool deleted)
         {
             Id = id;
-            Sender = sender;
+            SenderId = senderId;
+            SenderEmail = senderEmail;
             Subject = subject;
             SendingDate = sendingDate;
             Seen = seen;
